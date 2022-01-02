@@ -8,7 +8,7 @@ name: Build
     paths-ignore:
       - .github/dependabot.yml
       - .gitignore
-      - 'repo/**'
+      - 'docs/**'
       - '**/CODEOWNERS'
       - '**/README*'
   workflow_dispatch:
@@ -18,8 +18,8 @@ name: Build
         required: false
 
 jobs:
-  build_package:
-    name: Build RPM packages
+  buld_and_publish:
+    name: Build RPM packages and publish repo updates
     runs-on: ubuntu-latest
     container: fedora:35
     steps:
@@ -39,7 +39,7 @@ jobs:
           git config --global push.default simple
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add --all repo
+          git add --all docs
           git commit -m "Update packages and repodata"
           git push "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:main
       - name: Request Github Pages build job

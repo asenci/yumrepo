@@ -20,8 +20,8 @@ for SPEC in "${@}"; do
 
   rpmbuild -ba --nocheck \
     --define "_topdir ${PWD}/${BASEPATH}" \
-    --define "_rpmdir ${PWD}/repo/%{_build_arch}/packages" \
-    --define "_srcrpmdir ${PWD}/repo/Source/packages" \
+    --define "_rpmdir ${PWD}/docs/%{_build_arch}/packages" \
+    --define "_srcrpmdir ${PWD}/docs/Source/packages" \
     --define "_build_name_fmt %%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.rpm" \
     "${SPEC}"
 done
