@@ -12,11 +12,7 @@ for SPEC in "${@}"; do
 
   yum-builddep -y "${SPEC}"
 
-  PARSEDSPEC=$(mktemp)
-
-  rpmspec -P "${SPEC}" > "${PARSEDSPEC}"
-
-  spectool -g -C "${BASEPATH}/SOURCES" "${PARSEDSPEC}"
+  spectool -g -C "${BASEPATH}/SOURCES" "${SPEC}"
 
   rpmbuild -ba --nocheck \
     --define "_topdir ${PWD}/${BASEPATH}" \
