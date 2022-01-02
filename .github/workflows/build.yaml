@@ -4,10 +4,11 @@ name: Build
   push:
     branches:
       - main
-      - production
     paths-ignore:
+      - .dockerignore
       - .github/dependabot.yml
       - .gitignore
+      - Dockerfile
       - 'docs/**'
       - '**/CODEOWNERS'
       - '**/README*'
