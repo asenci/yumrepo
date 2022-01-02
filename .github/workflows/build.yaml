@@ -6,6 +6,7 @@ name: Build
       - main
       - production
     paths-ignore:
+      - .github/dependabot.yml
       - .gitignore
       - '**/CODEOWNERS'
       - '**/README*'
