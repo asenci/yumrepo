@@ -24,8 +24,6 @@ jobs:
     runs-on: ubuntu-latest
     container: ghcr.io/${{ github.repository }}
     steps:
-      - name: Install dependencies
-        run: dnf -y install createrepo git-core rpm-build rpmdevtools rpmlint yum-utils
       - name: Checkout repo
         uses: actions/checkout@v2
       - name: Lint SPEC files
