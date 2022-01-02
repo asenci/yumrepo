@@ -22,14 +22,14 @@ jobs:
     runs-on: ubuntu-latest
     container: fedora:35
     steps:
+      - name: Install dependencies
+        run: dnf -y install createrepo git-core rpm-build rpmdevtools rpmlint yum-utils
       - name: Checkout repo
         uses: actions/checkout@v2
-      - name: Install dependencies
-        run: dnf -y install createrepo git rpm-build rpmdevtools rpmlint yum-utils
       - name: Lint SPEC files
-        run: ./lint.sh
+        run: ./lint.sh ${{ inputs.paths }}
       - name: Build packages
-        run: ./build.sh
+        run: ./build.sh ${{ inputs.paths }}
       - name: Update repodata
         run: ./updaterepo.sh
       - name: Push updates
