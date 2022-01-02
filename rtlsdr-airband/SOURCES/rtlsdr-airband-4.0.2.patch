@@ -1,8 +1,8 @@
 diff --git a/init.d/rtl_airband.service b/init.d/rtl_airband.service
-index f35cb48..a9fbf39 100644
+index f35cb48..d553c18 100644
 --- a/init.d/rtl_airband.service
 +++ b/init.d/rtl_airband.service
-@@ -6,7 +6,7 @@ After=network.target
+@@ -6,11 +6,12 @@ After=network.target
  
  [Service]
  Type=simple
@@ -11,6 +11,11 @@ index f35cb48..a9fbf39 100644
  # The program may exit only due to startup failure (eg. misconfiguration)
  # or due to failure of all SDR devices (eg. disconnection). In either case,
  # there is no point to restart it, because it would fail once again.
+ Restart=no
++User=rtl_airband
+ 
+ [Install]
+ WantedBy=multi-user.target
 diff --git a/src/rtl_airband.h b/src/rtl_airband.h
 index d8ea441..b24d4d9 100644
 --- a/src/rtl_airband.h

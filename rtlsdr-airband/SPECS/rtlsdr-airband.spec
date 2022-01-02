@@ -1,6 +1,6 @@
 Name:     rtlsdr-airband
 Version:  4.0.2
-Release:  1%{?dist}
+Release:  2%{?dist}
 Summary:  SDR AM/NFM demodulator
 License:  GPLv3
 URL:      https://github.com/szpajder/RTLSDR-Airband
@@ -39,6 +39,14 @@ install -Dpm 0644 -t %{buildroot}%{_pkgdocdir}/examples config/*
 
 install -Dpm 0644 init.d/rtl_airband.service %{buildroot}%{_unitdir}/rtl_airband.service
 
+%pre
+getent passwd rtl_airband >/dev/null 2>&1 || useradd \
+  --comment 'SDR AM/NFM demodulator' \
+  --groups rtlsdr \
+  --system \
+  --shell /sbin/nologin \
+  rtl_airband
+
 %post
 %systemd_post rtl_airband.service
 
@@ -58,5 +66,8 @@ install -Dpm 0644 init.d/rtl_airband.service %{buildroot}%{_unitdir}/rtl_airband
 
 
 %changelog
+* Mon Jan 03 2022 Andre Sencioles <asenci@gmail.com> - 4.0.2-2
+- Create rtl_airband user during installation
+
 * Sun Jan 02 2022 Andre Sencioles <asenci@gmail.com> - 4.0.2-1
 - Initial release
