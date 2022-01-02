@@ -10,8 +10,10 @@ fi
 for SPEC in "${@}"; do
   RPMLINTRC=$(dirname $(dirname "${SPEC}"))/.rpmlintrc
   if [ -f "${RPMLINTRC}" ]; then
-    RPMLINTARGS+=("--rpmlintrc" "${RPMLINTRC}")
+    RPMLINTARGS=("--rpmlintrc" "${RPMLINTRC}")
   fi
 
   rpmlint "${RPMLINTARGS[@]}" "${SPEC}"
+
+  unset RPMLINTARGS
 done
