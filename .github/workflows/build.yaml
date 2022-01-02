@@ -1,0 +1,48 @@
+---
+name: Build
+'on':
+  push:
+    branches:
+      - main
+      - production
+    paths-ignore:
+      - .gitignore
+      - '**/CODEOWNERS'
+      - '**/README*'
+  workflow_dispatch:
+    inputs:
+      paths:
+        description: List of paths where to look for RPM specs
+        required: false
+
+jobs:
+  build_package:
+    name: Build RPM packages
+    runs-on: ubuntu-latest
+    container: fedora:35
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: dnf -y install createrepo git rpm-build rpmdevtools rpmlint yum-utils
+      - name: Lint SPEC files
+        run: ./lint.sh
+      - name: Build packages
+        run: ./build.sh
+      - name: Update repodata
+        run: ./updaterepo.sh
+      - name: Push updates
+        run: |
+          git config gc.auto 0
+          git config --global push.default simple
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add --all repo
+          git commit -m "Update packages and repodata"
+          git push "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:main
+      - name: Request Github Pages build job
+        run: >-
+          curl -L -X POST
+          -H "Content-Type: application/json"
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}"
+          "https://api.github.com/repos/${{ github.repository }}/pages/builds"
