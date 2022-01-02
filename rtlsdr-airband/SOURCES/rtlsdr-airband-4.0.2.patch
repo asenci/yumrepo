@@ -1,0 +1,26 @@
+diff --git a/init.d/rtl_airband.service b/init.d/rtl_airband.service
+index f35cb48..a9fbf39 100644
+--- a/init.d/rtl_airband.service
++++ b/init.d/rtl_airband.service
+@@ -6,7 +6,7 @@ After=network.target
+ 
+ [Service]
+ Type=simple
+-ExecStart=/usr/local/bin/rtl_airband -Fe
++ExecStart=/usr/bin/rtl_airband -Fe
+ # The program may exit only due to startup failure (eg. misconfiguration)
+ # or due to failure of all SDR devices (eg. disconnection). In either case,
+ # there is no point to restart it, because it would fail once again.
+diff --git a/src/rtl_airband.h b/src/rtl_airband.h
+index d8ea441..b24d4d9 100644
+--- a/src/rtl_airband.h
++++ b/src/rtl_airband.h
+@@ -48,7 +48,7 @@
+ #define THREAD pthread_t
+ #define GOTOXY(x, y) printf("%c[%d;%df",0x1B,y,x)
+ #ifndef SYSCONFDIR
+-#define SYSCONFDIR "/usr/local/etc"
++#define SYSCONFDIR "/etc"
+ #endif
+ #define CFGFILE SYSCONFDIR "/rtl_airband.conf"
+ #define PIDFILE "/run/rtl_airband.pid"
