@@ -8,6 +8,7 @@ name: Build
     paths-ignore:
       - .github/dependabot.yml
       - .gitignore
+      - 'repo/**'
       - '**/CODEOWNERS'
       - '**/README*'
   workflow_dispatch:
