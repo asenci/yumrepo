@@ -1,9 +1,9 @@
-Name:   rtlsdr-airband
+Name:     rtlsdr-airband
 Version:  4.0.2
 Release:  1%{?dist}
 Summary:  SDR AM/NFM demodulator
 License:  GPLv3
-URL:    https://github.com/szpajder/RTLSDR-Airband
+URL:      https://github.com/szpajder/RTLSDR-Airband
 Source0:  https://github.com/szpajder/RTLSDR-Airband/archive/v%{version}.tar.gz
 
 Patch0: rtlsdr-airband-4.0.2.patch
@@ -17,9 +17,7 @@ BuildRequires: pulseaudio-libs-devel
 BuildRequires: rtl-sdr-devel
 BuildRequires: SoapySDR-devel
 
-Requires(post): systemd
-Requires(preun): systemd
-Requires(postun): systemd
+%systemd_requires
 
 %description
 RTLSDR-Airband receives analog radio voice channels and produces audio streams which can be routed to various outputs, such as online streaming services like LiveATC.net. Originally the only SDR type supported by the program was Realtek DVB-T dongle (hence the project's name). However, thanks to SoapySDR vendor-neutral SDR library, other radios are now supported as well.
@@ -60,5 +58,5 @@ install -Dpm 0644 init.d/rtl_airband.service %{buildroot}%{_unitdir}/rtl_airband
 
 
 %changelog
-* Sun Jan 2 2022 Andre Sencioles <asenci@gmail.com> - 4.0.2-1
+* Sun Jan 02 2022 Andre Sencioles <asenci@gmail.com> - 4.0.2-1
 - Initial release
