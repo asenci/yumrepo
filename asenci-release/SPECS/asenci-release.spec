@@ -17,8 +17,7 @@ This package contains my personal repository configuration for yum.
 
 
 %install
-%{__install} -d %{buildroot}%{_sysconfdir}/yum.repos.d
-%{__install} %{SOURCE1} %{buildroot}%{_sysconfdir}/yum.repos.d/asenci.repo
+install -Dpm 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/yum.repos.d/asenci.repo
 
 
 %files
