@@ -19,15 +19,13 @@ name: Build
         required: false
 
 jobs:
-  buld_and_publish:
+  packages:
     name: Build RPM packages and publish repo updates
     runs-on: ubuntu-latest
     container: ghcr.io/${{ github.repository }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-      - name: Lint SPEC files
-        run: ./lint.sh ${{ inputs.paths }}
       - name: Build packages
         run: ./build.sh ${{ inputs.paths }}
       - name: Update repodata

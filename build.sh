@@ -14,6 +14,15 @@ for SPEC in "${@}"; do
 
   spectool -g -C "${BASEPATH}/SOURCES" "${SPEC}"
 
+  RPMLINTRC=$(dirname $(dirname "${SPEC}"))/.rpmlintrc
+  if [ -f "${RPMLINTRC}" ]; then
+    RPMLINTARGS=("--rpmlintrc" "${RPMLINTRC}")
+  else
+    unset RPMLINTARGS
+  fi
+
+  rpmlint "${RPMLINTARGS[@]}" "${SPEC}"
+
   rpmbuild -ba --nocheck \
     --define "_topdir ${PWD}/${BASEPATH}" \
     --define "_rpmdir ${PWD}/docs/%{_build_arch}/packages" \
