@@ -1,0 +1,2 @@
+addFilter("W: no-%prep-section")
+addFilter("W: no-%build-section")

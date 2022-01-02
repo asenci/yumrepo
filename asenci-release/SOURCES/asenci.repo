@@ -1,0 +1,11 @@
+[asenci]
+name=@asenci personal repo - $basearch
+baseurl=https://asenci.github.io/yumrepo/$basearch
+enabled=1
+gpgcheck=0
+
+[asenci-source]
+name=@asenci personal repo - Source
+baseurl=https://asenci.github.io/yumrepo/Source
+enabled=0
+gpgcheck=0
