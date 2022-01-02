@@ -22,7 +22,7 @@ jobs:
   buld_and_publish:
     name: Build RPM packages and publish repo updates
     runs-on: ubuntu-latest
-    container: fedora:35
+    container: ghcr.io/${{ github.repository }}
     steps:
       - name: Install dependencies
         run: dnf -y install createrepo git-core rpm-build rpmdevtools rpmlint yum-utils
