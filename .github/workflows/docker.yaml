@@ -1,0 +1,53 @@
+---
+name: Docker
+
+'on':
+  push:
+    paths:
+      - .dockerignore
+      - Dockerfile
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  docker_image:
+    name: Build Docker container image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Get latest tag
+        id: latest
+        if: github.ref == 'refs/heads/main'
+        run: echo "::set-output name=tag::latest"
+      - name: Get image tags and labels
+        id: metadata
+        uses: docker/metadata-action@v3
+        with:
+          images: ghcr.io/${{ github.repository }}
+          flavor: latest=false
+          tags: |
+            type=raw,priority=650,value=${{ steps.latest.outputs.tag }}
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=ref,event=tag
+            type=ref,event=branch
+      - name: Log into container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and publish image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          labels: ${{ steps.metadata.outputs.labels }}
+          no-cache: true
+          pull: true
+          push: ${{ github.actor != 'dependabot[bot]' }}
+          tags: ${{ steps.metadata.outputs.tags }}
