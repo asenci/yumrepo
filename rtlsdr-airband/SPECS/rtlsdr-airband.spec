@@ -1,10 +1,12 @@
 Name:     rtlsdr-airband
 Version:  4.0.2
-Release:  2%{?dist}
+Release:  3%{?dist}
 Summary:  SDR AM/NFM demodulator
 License:  GPLv3
 URL:      https://github.com/szpajder/RTLSDR-Airband
 Source0:  https://github.com/szpajder/RTLSDR-Airband/archive/v%{version}.tar.gz
+
+Source1:  rtl_airband.sysconfig
 
 Patch0: rtlsdr-airband-4.0.2.patch
 
@@ -17,7 +19,7 @@ BuildRequires: pulseaudio-libs-devel
 BuildRequires: rtl-sdr-devel
 BuildRequires: SoapySDR-devel
 
-%systemd_requires
+%{?systemd_ordering}
 
 %description
 RTLSDR-Airband receives analog radio voice channels and produces audio
@@ -42,6 +44,7 @@ radios are now supported as well.
 # copy sample configuration files
 install -Dpm 0644 -t %{buildroot}%{_pkgdocdir}/examples config/*
 
+install -Dpm 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/sysconfig/rtl_airband
 install -Dpm 0644 init.d/rtl_airband.service %{buildroot}%{_unitdir}/rtl_airband.service
 
 %pre
@@ -49,6 +52,7 @@ getent passwd rtl_airband >/dev/null 2>&1 || useradd \
   --comment 'SDR AM/NFM demodulator' \
   --groups rtlsdr \
   --system \
+  --home-dir / \
   --shell /sbin/nologin \
   rtl_airband
 
@@ -64,13 +68,20 @@ getent passwd rtl_airband >/dev/null 2>&1 || useradd \
 
 %files
 %license LICENSE
+
 %doc README.md
 %doc examples
+
+%config(noreplace) %{_sysconfdir}/sysconfig/rtl_airband
+
 %{_bindir}/rtl_airband
 %{_unitdir}/rtl_airband.service
 
 
 %changelog
+* Sat Jan 29 2022 Andre Sencioles <asenci@gmail.com> - 4.0.2-3
+- Update systemd unit file to add support to a sysconfig file
+
 * Mon Jan 03 2022 Andre Sencioles <asenci@gmail.com> - 4.0.2-2
 - Create rtl_airband user during installation
 
