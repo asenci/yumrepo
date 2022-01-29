@@ -1,8 +1,7 @@
-diff --git a/debian/generate-wisdom b/debian/generate-wisdom
-index dc98d72..72f6dbf 100755
+index dc98d72..fc514e1 100755
 --- a/debian/generate-wisdom
 +++ b/debian/generate-wisdom
-@@ -9,11 +9,11 @@ echo "Benchmarking .. this will take a while." >&2
+@@ -9,12 +9,13 @@ echo "Benchmarking .. this will take a while." >&2
  
  # generate initial wisdom so that twopass implementations have something to work with
  echo "First pass: generating $WORKDIR/wisdom.initial" >&2
@@ -15,4 +14,8 @@ index dc98d72..72f6dbf 100755
 +/usr/lib64/dump1090-fa/starch-benchmark -i 5 -r $WORKDIR/wisdom.initial -o $WORKDIR/wisdom.local
  
  echo "Wisdom written to $WORKDIR/wisdom.local" >&2
- echo "Copy this file to /etc/dump1090-fa/wisdom.local" >&2
+-echo "Copy this file to /etc/dump1090-fa/wisdom.local" >&2
+-echo "(and restart dump1090-fa) to start using it." >&2
++echo "Copy this file to /usr/share/dump1090-fa/wisdom.local," >&2
++echo "  un-comment the WISDOM line on /etc/sysconfig/dump1090-fa," >&2
++echo "  and restart dump1090-fa to start using it." >&2

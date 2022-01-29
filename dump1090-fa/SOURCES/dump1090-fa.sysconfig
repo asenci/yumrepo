@@ -21,7 +21,7 @@ ADAPTIVE_RANGE="--adaptive-range"
 # Turn on options to reduce load on slower CPUs, at the expense of slightly worse decoder performance.
 #SLOW_CPU="--adaptive-duty-cycle 10 --no-fix-df"
 # Local wisdom file used to select DSP implementations; defaults to using built-in ranking
-#WISDOM="--wisdom /etc/dump1090-fa/wisdom.local"
+#WISDOM="--wisdom /usr/share/dump1090-fa/wisdom.local"
 
 # Correct CRC errors where possible
 ERROR_CORRECTION="--fix"
