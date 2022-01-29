@@ -1,0 +1,47 @@
+# Options for dump1090-fa
+
+# SDR device type. Use "none" for a net-only configuration
+OPTIONS="--device-type rtlsdr"
+# serial number or device index of device to use (only needed if there is more than one SDR connected)
+#OPTIONS="${OPTIONS} --device-index 00000"
+# Initial receiver gain, in dB. If adaptive gain is enabled (see below) the actual gain
+# may change over time
+OPTIONS="${OPTIONS} --gain 60"
+
+# Adjust gain to try to achieve optimal dynamic range / noise floor?
+OPTIONS="${OPTIONS} --adaptive-range"
+# Target dynamic range in dB (defaults to autoselect based on SDR type)
+#OPTIONS="${OPTIONS} --adaptive-range-target 30"
+# Reduce gain when loud message bursts from nearby aircraft are seen?
+#OPTIONS="${OPTIONS} --adaptive-burst"
+# Gain range to allow when changing gain, in dB (defaults to no limit)
+#OPTIONS="${OPTIONS} --adaptive-min-gain 10"
+#OPTIONS="${OPTIONS} --adaptive-max-gain 50"
+
+# Turn on options to reduce load on slower CPUs, at the expense of slightly worse decoder performance.
+#OPTIONS="${OPTIONS} --adaptive-duty-cycle 10 --no-fix-df"
+# Local wisdom file used to select DSP implementations; defaults to using built-in ranking
+#OPTIONS="${OPTIONS} --wisdom /etc/dump1090-fa/wisdom.local"
+
+# Correct CRC errors where possible
+OPTIONS="${OPTIONS} --fix"
+
+
+# Receiver location, used for some types of position decoding. Provide the location as signed decimal degrees.
+#OPTIONS="${OPTIONS} --lat xx.x"
+#OPTIONS="${OPTIONS} --long -yy.y"
+# Maximum range, in NM. Positions more distant than this are ignored. Defaults to no limit.
+OPTIONS="${OPTIONS} --max-range 360"
+
+# Network ports to listen on for connections
+#OPTIONS="${OPTIONS} --net-ri-port 30000"
+OPTIONS="${OPTIONS} --net-ro-port 30002"
+OPTIONS="${OPTIONS} --net-sbs-port 30003"
+#OPTIONS="${OPTIONS} --net-bi-port 30004,30104"
+#OPTIONS="${OPTIONS} --net-bo-port 30005"
+
+# Accuracy of location written to JSON output
+OPTIONS="${OPTIONS} --json-location-accuracy 1"
+
+# Additional options can be added here:
+#OPTIONS="${OPTIONS} --extra-options"
