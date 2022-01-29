@@ -6,7 +6,7 @@ URL:      https://www.flightradar24.com/share-your-data
 %define upstream_version 1.0.25
 %define upstream_release 3
 Version:  %{upstream_version}_%{upstream_release}
-Release:  2%{?dist}
+Release:  3%{?dist}
 Source0:  https://repo-feed.flightradar24.com/linux_x86_64_binaries/fr24feed_%{upstream_version}-%{upstream_release}_amd64.tgz
 Source1:  fr24feed-status
 Source2:  fr24feed.service
@@ -55,6 +55,9 @@ getent passwd fr24feed >/dev/null 2>&1 || useradd \
 
 
 %changelog
+* Mon Jan 03 2022 Andre Sencioles <asenci@gmail.com> - 1.0.25_3-3
+- Update systemd unit file
+
 * Mon Jan 03 2022 Andre Sencioles <asenci@gmail.com> - 1.0.25_3-2
 - Add status script
 - Create fr24feed user during installation

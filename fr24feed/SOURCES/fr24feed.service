@@ -5,10 +5,11 @@ After=network-online.target
 [Service]
 User=fr24feed
 Type=simple
-ExecStart=/usr/bin/fr24feed
+ExecStart=/usr/bin/fr24feed --quiet
 Restart=on-failure
 RestartSec=30
-StandardOutput=null
+
+ExecStartPre=!-/usr/bin/install -D -d -o fr24feed -g fr24feed /var/log/fr24feed
 
 [Install]
 WantedBy=multi-user.target
