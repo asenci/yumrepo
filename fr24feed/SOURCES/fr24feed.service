@@ -1,0 +1,13 @@
+[Unit]
+Description=Flightradar24 Decoder & Feeder
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/fr24feed
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
+
