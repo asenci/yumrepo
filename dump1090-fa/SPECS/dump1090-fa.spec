@@ -1,6 +1,6 @@
 Name:     dump1090-fa
 Version:  6.1
-Release:  1%{?dist}
+Release:  2%{?dist}
 Summary:  FlightAware ADS-B Ground Station System for SDRs
 License:  GPLv2
 URL:      https://www.flightaware.com/
@@ -96,5 +96,8 @@ getent passwd dump1090 >/dev/null 2>&1 || useradd \
 
 
 %changelog
+* Sat Jan 29 2022 Andre Sencioles <asenci@gmail.com> - 6.1-2
+- Update dump1090-fa.sysconfig
+
 * Sat Jan 29 2022 Andre Sencioles <asenci@gmail.com> - 6.1-1
 - Initial release
