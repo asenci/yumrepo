@@ -7,7 +7,30 @@ After=network.target
 User=dump1090
 EnvironmentFile=-/etc/sysconfig/dump1090-fa
 Type=simple
-ExecStart=/usr/bin/dump1090-fa $OPTIONS
+
+ExecStart=/usr/bin/dump1090-fa --quiet --write-json %t/dump1090-fa \
+  $RECEIVER \
+  $RECEIVER_SERIAL \
+  $RECEIVER_GAIN \
+  $ADAPTIVE_RANGE \
+  $ADAPTIVE_RANGE_TARGET \
+  $ADAPTIVE_BURST \
+  $ADAPTIVE_MIN_GAIN \
+  $ADAPTIVE_MAX_GAIN \
+  $SLOW_CPU \
+  $WISDOM \
+  $ERROR_CORRECTION \
+  $LAT \
+  $LON \
+  $MAX_RANGE \
+  $NET_RAW_INPUT_PORTS \
+  $NET_RAW_OUTPUT_PORTS \
+  $NET_SBS_OUTPUT_PORTS \
+  $NET_BEAST_INPUT_PORTS \
+  $NET_BEAST_OUTPUT_PORTS \
+  $JSON_LOCATION_ACCURACY \
+  $EXTRA_OPTIONS
+
 RuntimeDirectory=dump1090-fa
 RuntimeDirectoryMode=0755
 Restart=on-failure
