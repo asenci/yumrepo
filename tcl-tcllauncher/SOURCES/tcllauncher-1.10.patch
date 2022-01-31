@@ -1,0 +1,13 @@
+diff --git a/tcllauncher.tcl b/tcllauncher.tcl
+index 454c3e6..857a1ae 100644
+--- a/tcllauncher.tcl
++++ b/tcllauncher.tcl
+@@ -48,7 +48,7 @@ proc main {{argv ""}} {
+ 
+ 	# this version looks for ../lib/$shortName/main.tcl
+ 
+-        set ::launchdir [eval file join [lreplace $path end-1 end lib $shortName]]
++        set ::launchdir [eval file join [lreplace $path end-1 end lib64 tcl8.6 $shortName]]
+         set path [eval file join $::launchdir main.tcl]
+     } else {
+         set path $prog.tcl

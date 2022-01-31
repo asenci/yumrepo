@@ -2,11 +2,13 @@
 %{!?tcl_sitearch: %global tcl_sitearch %{_libdir}/tcl%{tcl_version}}
 Name:     tcl-tcllauncher
 Version:  1.10
-Release:  1%{?dist}
+Release:  2%{?dist}
 Summary:  Launcher program for Tcl applications
 License:  BSD 3-Clause License
 URL:      https://github.com/flightaware/tcllauncher
 Source0:  https://github.com/flightaware/tcllauncher/archive/v%{version}.tar.gz
+
+Patch0: tcllauncher-1.10.patch
 
 BuildRequires: autoconf tcl-devel
 
@@ -18,10 +20,11 @@ tcllauncher is a way to have Tcl programs run out of /usr/local/bin under their 
 
 %prep
 %setup -qn tcllauncher-%{version}
+%patch0 -p1
 
 %build
 autoconf
-%configure --libdir=%{tcl_sitearch}
+%configure --libdir=%{tcl_sitearch} --with-tcl=%{tcl_sitearch}
 %make_build
 
 %install
@@ -40,5 +43,8 @@ autoconf
 
 
 %changelog
+* Mon Jan 31 2022 Andre Sencioles <asenci@gmail.com> - 1.10-2
+- Fix tcllauncher TCL library search path
+
 * Sat Jan 29 2022 Andre Sencioles <asenci@gmail.com> - 1.10-1
 - Initial release
