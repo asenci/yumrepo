@@ -2,13 +2,15 @@
 %{!?tcl_sitearch: %global tcl_sitearch %{_libdir}/tcl%{tcl_version}}
 Name:     tcl-tcllauncher
 Version:  1.10
-Release:  2%{?dist}
+Release:  3%{?dist}
 Summary:  Launcher program for Tcl applications
 License:  BSD 3-Clause License
 URL:      https://github.com/flightaware/tcllauncher
 Source0:  https://github.com/flightaware/tcllauncher/archive/v%{version}.tar.gz
 
 Patch0: tcllauncher-1.10.patch
+
+Provides: tcllauncher = %{version}
 
 BuildRequires: autoconf tcl-devel
 
@@ -43,6 +45,9 @@ autoconf
 
 
 %changelog
+* Mon Jan 31 2022 Andre Sencioles <asenci@gmail.com> - 1.10-3
+- Add package alias
+
 * Mon Jan 31 2022 Andre Sencioles <asenci@gmail.com> - 1.10-2
 - Fix tcllauncher TCL library search path
 
