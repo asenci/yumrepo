@@ -6,7 +6,7 @@ License:  GPLv3
 URL:      https://github.com/mutability/mlat-client
 Source0:  https://github.com/mutability/mlat-client/archive/v%{version}.tar.gz
 
-BuildRequires:  python3-devel
+BuildRequires:  python3-devel python3-wheel
 
 %py_provides python3-mlat-client
 
