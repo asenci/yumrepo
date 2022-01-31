@@ -26,7 +26,7 @@ if [ "$FEED" == "connected" ]; then
     FEED=`grep feed_num_ac_tracked= ${MONITOR_FILE} 2>/dev/null | cut -d'=' -f2`
     echo "FR24 Tracked AC: ${FEED}"
 else
-    log_failure_msg "FR24 Link: $FEED"
+    echo "FR24 Link: $FEED"
 fi
 
 RX=`grep rx_connected= ${MONITOR_FILE} 2>/dev/null | cut -d'=' -f2`
@@ -36,7 +36,7 @@ RX2=`grep num_resyncs= ${MONITOR_FILE} 2>/dev/null | cut -d'=' -f2`
 if [ "$RX" == "1" ]; then
     echo "Receiver: connected ($RX1 MSGS/$RX2 SYNC)"
 else
-    log_failure_msg "Receiver: down"
+    echo "Receiver: down"
 fi
 
 MLAT=`grep 'mlat-ok=' ${MONITOR_FILE} 2>/dev/null | cut -d'=' -f2`
@@ -50,5 +50,5 @@ if [ "$MLAT" == "YES" ]; then
     MLAT_SEEN=`grep mlat-number-seen= ${MONITOR_FILE} 2>/dev/null | cut -d'=' -f2`
     echo "FR24 MLAT AC seen: $MLAT_SEEN"
 else
-    log_failure_msg "FR24 MLAT: not running"
+    echo "FR24 MLAT: not running"
 fi
