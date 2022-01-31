@@ -1,6 +1,6 @@
 Name:     dump1090-fa
 Version:  6.1
-Release:  4%{?dist}
+Release:  5%{?dist}
 Summary:  FlightAware ADS-B Ground Station System for SDRs
 License:  GPLv2
 URL:      https://www.flightaware.com/
@@ -40,11 +40,12 @@ device support.
 DUMP1090_VERSION="%{version}"; export DUMP1090_VERSION
 %undefine _hardened_build
 %set_build_flags
-%make_build
+%make_build all faup1090
 
 
 %install
 install -Dpm 0755 dump1090 %{buildroot}%{_bindir}/dump1090-fa
+install -Dpm 0755 faup1090 %{buildroot}%{_bindir}/faup1090
 install -Dpm 0755 view1090 %{buildroot}%{_bindir}/view1090-fa
 
 install -Dpm 0644 %{SOURCE3} %{buildroot}%{_docdir}/%{name}/lighttpd-dump1090-fa.conf
@@ -89,6 +90,7 @@ getent passwd dump1090 >/dev/null 2>&1 || useradd \
 %config(noreplace) %{_sysconfdir}/sysconfig/dump1090-fa
 
 %{_bindir}/dump1090-fa
+%{_bindir}/faup1090
 %{_bindir}/view1090-fa
 %{_unitdir}/dump1090-fa.service
 %{_libdir}/%{name}
@@ -96,6 +98,10 @@ getent passwd dump1090 >/dev/null 2>&1 || useradd \
 
 
 %changelog
+* Mon Jan 31 2022 Andre Sencioles <asenci@gmail.com> - 6.1-5
+- Add faup1090 to the package
+- Enable Beast output by default
+
 * Sat Jan 29 2022 Andre Sencioles <asenci@gmail.com> - 6.1-4
 - Update wisdom file path
 
