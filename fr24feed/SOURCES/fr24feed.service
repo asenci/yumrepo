@@ -1,6 +1,6 @@
 [Unit]
 Description=Flightradar24 Decoder & Feeder
-After=network-online.target
+After=network-online.target time-sync.target
 
 [Service]
 User=fr24feed
