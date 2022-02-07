@@ -1,0 +1,15 @@
+[Unit]
+Description=dump978 ADS-B UAT receiver (FlightAware customization)
+Documentation=https://flightaware.com/adsb/piaware/
+After=network.target
+
+[Service]
+User=dump978
+EnvironmentFile=-/etc/sysconfig/dump978-fa
+Type=simple
+ExecStart=/usr/bin/dump978-fa $RECEIVER_OPTIONS $NETWORK_OPTIONS $EXTRA_OPTIONS
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,19 @@
+[Unit]
+Description=skyaware978 ADS-B UAT web display
+Documentation=https://flightaware.com/adsb/piaware/
+After=network.target
+After=dump978-fa.service
+
+[Service]
+User=dump978
+EnvironmentFile=-/etc/sysconfig/skyaware978
+Type=simple
+
+ExecStart=/usr/bin/skyaware978 --json-dir %t/skyaware978 $LAT $LON $EXTRA_OPTIONS
+
+RuntimeDirectory=skyaware978
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,6 @@
+# Receiver location, used for some types of position decoding. Provide the location as signed decimal degrees.
+#LAT="--lat xx.x"
+#LON="--lon -yy.y"
+
+# Additional options can be added here:
+#EXTRA_OPTIONS="--extra-options"

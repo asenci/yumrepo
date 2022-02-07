@@ -1,0 +1,8 @@
+# Options for dump978-fa
+
+RECEIVER_OPTIONS="--sdr driver=rtlsdr --format CS8"
+
+NETWORK_OPTIONS="--raw-port 30978 --json-port 30979"
+
+# Additional options can be added here:
+#EXTRA_OPTIONS="--extra-options"
