@@ -11,6 +11,7 @@ RUN dnf -y install --setopt=tsflags=nodocs \
   rpmlint \
   systemd-rpm-macros \
   yum-utils \
+  https://asenci.github.io/yumrepo/x86_64/packages/asenci-release-1-1.noarch.rpm \
   && dnf -y clean all \
   && mv /etc/adjtime.rpmnew /etc/adjtime \
   && rm -rf \
