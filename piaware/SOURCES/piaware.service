@@ -5,14 +5,15 @@ After=dump1090-fa.service network-online.target time-sync.target
 
 [Service]
 User=piaware
-RuntimeDirectory=piaware
 EnvironmentFile=-/etc/sysconfig/piaware
-ExecStart=/usr/bin/piaware -p %t/piaware/piaware.pid -plainlog -statusfile %t/piaware/status.json $OPTIONS
-ExecReload=/bin/kill -HUP $MAINPID
 Type=simple
+
+ExecStart=/usr/bin/piaware -plainlog -cachedir %t/piaware -statusfile %t/piaware/status.json $OPTIONS
+ExecReload=/bin/kill -HUP $MAINPID
+
+RuntimeDirectory=piaware
 Restart=on-failure
 RestartSec=30
-RestartPreventExitStatus=4 6
 
 [Install]
 WantedBy=default.target

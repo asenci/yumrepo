@@ -2,7 +2,7 @@
 %{!?tcl_sitearch: %global tcl_sitearch %{_libdir}/tcl%{tcl_version}}
 Name:     piaware
 Version:  7.1
-Release:  2%{?dist}
+Release:  3%{?dist}
 Summary:  Client-side package and programs for forwarding ADS-B data to FlightAware
 License:  Copyright FlightAware LLC
 URL:      https://github.com/flightaware/piaware
@@ -96,7 +96,11 @@ getent passwd piaware >/dev/null 2>&1 || useradd \
 %{_mandir}
 
 %changelog
+* Sat Feb 19 2022 Andre Sencioles <asenci@gmail.com> - 7.1-3
+- Update systemd unit file
+
 * Sat Feb 19 2022 Andre Sencioles <asenci@gmail.com> - 7.1-2
 - Update mlat client path
+
 * Sat Feb 19 2022 Andre Sencioles <asenci@gmail.com> - 7.1-1
 - Initial release

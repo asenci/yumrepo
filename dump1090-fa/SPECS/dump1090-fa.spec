@@ -1,6 +1,6 @@
 Name:     dump1090-fa
 Version:  6.1
-Release:  5%{?dist}
+Release:  6%{?dist}
 Summary:  FlightAware ADS-B Ground Station System for SDRs
 License:  GPLv2
 URL:      https://www.flightaware.com/
@@ -98,6 +98,9 @@ getent passwd dump1090 >/dev/null 2>&1 || useradd \
 
 
 %changelog
+* Sat Feb 19 2022 Andre Sencioles <asenci@gmail.com> - 6.1-6
+- Update sysconfig defaults
+
 * Mon Jan 31 2022 Andre Sencioles <asenci@gmail.com> - 6.1-5
 - Add faup1090 to the package
 - Enable Beast output by default
