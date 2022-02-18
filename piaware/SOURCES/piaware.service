@@ -1,0 +1,18 @@
+[Unit]
+Description=FlightAware ADS-B uploader
+Documentation=https://flightaware.com/adsb/piaware/
+After=dump1090-fa.service network-online.target time-sync.target
+
+[Service]
+User=piaware
+RuntimeDirectory=piaware
+EnvironmentFile=-/etc/sysconfig/piaware
+ExecStart=/usr/bin/piaware -p %t/piaware/piaware.pid -plainlog -statusfile %t/piaware/status.json $OPTIONS
+ExecReload=/bin/kill -HUP $MAINPID
+Type=simple
+Restart=on-failure
+RestartSec=30
+RestartPreventExitStatus=4 6
+
+[Install]
+WantedBy=default.target

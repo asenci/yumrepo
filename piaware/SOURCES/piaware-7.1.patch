@@ -1,0 +1,221 @@
+diff --git a/doc/Makefile b/doc/Makefile
+index 53c7f3e..69ba88a 100644
+--- a/doc/Makefile
++++ b/doc/Makefile
+@@ -3,6 +3,7 @@
+ #
+ 
+ PREFIX=/usr
++MANDIR=$(PREFIX)/share/man
+ 
+ MANPAGES=faup1090.1 piaware.1 piaware-config.1 piaware-status.1
+ 
+@@ -10,5 +11,5 @@ all:
+ 	@echo "'make install' to install docs"
+ 
+ install:
+-	install -d $(DESTDIR)$(PREFIX)/share/man/man1
+-	install $(MANPAGES) $(DESTDIR)$(PREFIX)/share/man/man1
++	install -d $(DESTDIR)$(MANDIR)/man1
++	install $(MANPAGES) $(DESTDIR)$(MANDIR)/man1
+diff --git a/package/Makefile b/package/Makefile
+index e3b3aeb..c0efd25 100644
+--- a/package/Makefile
++++ b/package/Makefile
+@@ -1,5 +1,5 @@
+ PREFIX=/usr
+-LIB=$(PREFIX)/lib/piaware_packages
++LIBDIR=$(PREFIX)/lib
+ TCLSH=$(shell which tclsh || which tclsh8.6 || which tclsh8.5)
+ 
+ FILES=fa_piaware_config.tcl fa_adept_client.tcl fa_sudo.tcl fa_services.tcl fa_sysinfo.tcl fa_gps.tcl piaware.tcl tryfinallyshim.tcl egm96.tcl egm96geoid.tcl
+@@ -11,10 +11,10 @@ pkgIndex.tcl: $(FILES)
+ 	echo 'pkg_mkIndex .' | $(TCLSH)
+ 
+ install: pkgIndex.tcl
+-	install -d $(DESTDIR)$(LIB) $(DESTDIR)$(LIB)/ca
+-	install $(FILES) pkgIndex.tcl $(DESTDIR)$(LIB)
+-	install ca/*.pem $(DESTDIR)$(LIB)/ca
+-	c_rehash $(DESTDIR)$(LIB)/ca
++	install -d $(DESTDIR)${LIBDIR}/piaware_packages $(DESTDIR)${LIBDIR}/piaware_packages/ca
++	install $(FILES) pkgIndex.tcl $(DESTDIR)${LIBDIR}/piaware_packages
++	install ca/*.pem $(DESTDIR)${LIBDIR}/piaware_packages/ca
++	c_rehash $(DESTDIR)${LIBDIR}/piaware_packages/ca
+ 	$(MAKE) -C helpers install
+ 	$(MAKE) -C fa_adept_codec install
+ 
+diff --git a/package/fa_adept_codec/Makefile b/package/fa_adept_codec/Makefile
+index a4e0ae5..48a5808 100644
+--- a/package/fa_adept_codec/Makefile
++++ b/package/fa_adept_codec/Makefile
+@@ -1,5 +1,5 @@
+ PREFIX=/usr
+-LIB=$(PREFIX)/lib/fa_adept_codec
++LIBDIR=$(PREFIX)/lib
+ TCLSH=$(shell which tclsh || which tclsh8.6 || which tclsh8.5)
+ 
+ FILES=fa_adept_codec.tcl fa_adept_schema.tcl none.codec adept_1.x.codec adept_2.1.codec adept_2.2.codec
+@@ -11,8 +11,8 @@ pkgIndex.tcl: $(FILES)
+ 	echo 'pkg_mkIndex . $(FILES)' | $(TCLSH)
+ 
+ install: pkgIndex.tcl
+-	install -d $(DESTDIR)$(LIB)
+-	install $(FILES) pkgIndex.tcl $(DESTDIR)$(LIB)
++	install -d $(DESTDIR)${LIBDIR}/fa_adept_codec
++	install $(FILES) pkgIndex.tcl $(DESTDIR)${LIBDIR}/fa_adept_codec
+ 
+ test:
+ 	$(TCLSH) ./fa_adept_codec.test -verbose pbte
+diff --git a/package/helpers/Makefile b/package/helpers/Makefile
+index efffd39..ed354ba 100644
+--- a/package/helpers/Makefile
++++ b/package/helpers/Makefile
+@@ -1,5 +1,5 @@
+ PREFIX=/usr
+-LIB=$(PREFIX)/lib/piaware_packages
++LIBDIR=$(PREFIX)/lib
+ 
+ CFLAGS=-Wall -Werror -O
+ 
+@@ -13,5 +13,5 @@ clean:
+ 	rm -f droproot
+ 
+ install: droproot
+-	install -d $(DESTDIR)$(LIB)/helpers
+-	install -m 0755 update-piaware-config droproot restart-receiver restart-network $(DESTDIR)$(LIB)/helpers
++	install -d $(DESTDIR)${LIBDIR}/piaware_packages/helpers
++	install -m 0755 update-piaware-config droproot restart-receiver restart-network $(DESTDIR)${LIBDIR}/piaware_packages/helpers
+diff --git a/programs/piaware-config/Makefile b/programs/piaware-config/Makefile
+index 811adc2..1ca6cef 100644
+--- a/programs/piaware-config/Makefile
++++ b/programs/piaware-config/Makefile
+@@ -4,12 +4,14 @@
+ #
+ 
+ PREFIX=/usr
++BINDIR=${PREFIX}/bin
++LIBDIR=$(PREFIX)/lib
+ TCLLAUNCHER := $(shell which tcllauncher)
+ 
+ all:
+ 	@echo "'make install' to install piaware-config"
+ 
+ install:
+-	install -d $(DESTDIR)$(PREFIX)/bin $(DESTDIR)$(PREFIX)/lib/piaware-config
+-	install -m 0755 $(TCLLAUNCHER) $(DESTDIR)$(PREFIX)/bin/piaware-config
+-	install *.tcl $(DESTDIR)$(PREFIX)/lib/piaware-config
++	install -d $(DESTDIR)$(BINDIR) $(DESTDIR)${LIBDIR}/piaware-config
++	install -m 0755 $(TCLLAUNCHER) $(DESTDIR)$(BINDIR)/piaware-config
++	install *.tcl $(DESTDIR)${LIBDIR}/piaware-config
+diff --git a/programs/piaware-status/Makefile b/programs/piaware-status/Makefile
+index 0c3ae14..754fb37 100644
+--- a/programs/piaware-status/Makefile
++++ b/programs/piaware-status/Makefile
+@@ -4,12 +4,15 @@
+ #
+ 
+ PREFIX=/usr
++BINDIR=${PREFIX}/bin
++LIBDIR=$(PREFIX)/lib
++LIB=${LIBDIR}/piaware
+ TCLLAUNCHER := $(shell which tcllauncher)
+ 
+ all:
+ 	@echo "'make install' to install piaware-status"
+ 
+ install:
+-	install -d $(DESTDIR)$(PREFIX)/bin $(DESTDIR)$(PREFIX)/lib/piaware-status
+-	install -m 0755 $(TCLLAUNCHER) $(DESTDIR)$(PREFIX)/bin/piaware-status
+-	install *.tcl $(DESTDIR)$(PREFIX)/lib/piaware-status
++	install -d $(DESTDIR)$(BINDIR) $(DESTDIR)${LIBDIR}/piaware-status
++	install -m 0755 $(TCLLAUNCHER) $(DESTDIR)$(BINDIR)/piaware-status
++	install *.tcl $(DESTDIR)${LIBDIR}/piaware-status
+diff --git a/programs/piaware/Makefile b/programs/piaware/Makefile
+index 3b3c7de..34d93fc 100644
+--- a/programs/piaware/Makefile
++++ b/programs/piaware/Makefile
+@@ -4,14 +4,15 @@
+ #
+ 
+ PREFIX=/usr
+-LIB=$(PREFIX)/lib/piaware
++BINDIR=${PREFIX}/bin
++LIBDIR=$(PREFIX)/lib
+ TCLLAUNCHER := $(shell which tcllauncher)
+ 
+ all:
+ 	@echo "'make install' to install piaware"
+ 
+ install:
+-	install -d $(DESTDIR)$(PREFIX)/bin $(DESTDIR)$(LIB)
+-	install -m 0755 $(TCLLAUNCHER) $(DESTDIR)$(PREFIX)/bin/piaware
+-	install *.tcl $(DESTDIR)$(LIB)
++	install -d $(DESTDIR)$(BINDIR) $(DESTDIR)${LIBDIR}/piaware
++	install -m 0755 $(TCLLAUNCHER) $(DESTDIR)$(BINDIR)/piaware
++	install *.tcl $(DESTDIR)${LIBDIR}/piaware
+ 	$(MAKE) -C helpers install
+diff --git a/programs/piaware/faup1090.tcl b/programs/piaware/faup1090.tcl
+index 9c80bb9..3c754d8 100644
+--- a/programs/piaware/faup1090.tcl
++++ b/programs/piaware/faup1090.tcl
+@@ -63,7 +63,7 @@ proc connect_adsb_via_faup1090 {} {
+ 	}
+ 
+ 	# path to faup1090
+-	set path [auto_execok "/usr/lib/piaware/helpers/faup1090"]
++	set path [auto_execok "/usr/bin/faup1090"]
+ 	if {$path eq ""} {
+ 		logger "No faup1090 found at $path, 1090ES support disabled"
+ 		return
+diff --git a/programs/piaware/helpers/Makefile b/programs/piaware/helpers/Makefile
+index 85bc073..0a094e9 100644
+--- a/programs/piaware/helpers/Makefile
++++ b/programs/piaware/helpers/Makefile
+@@ -1,9 +1,9 @@
+ PREFIX=/usr
+-LIB=$(PREFIX)/lib/piaware
++LIBDIR=$(PREFIX)/lib
+ 
+ all:
+ 	@echo '"make install" to install'
+ 
+ install:
+-	install -d $(DESTDIR)$(LIB)/helpers
+-	install -m 0755 run-apt-get $(DESTDIR)$(LIB)/helpers
++	install -d $(DESTDIR)${LIBDIR}/piaware/helpers
++	install -m 0755 run-apt-get $(DESTDIR)${LIBDIR}/piaware/helpers
+diff --git a/programs/pirehose/Makefile b/programs/pirehose/Makefile
+index d941689..74ee935 100644
+--- a/programs/pirehose/Makefile
++++ b/programs/pirehose/Makefile
+@@ -4,14 +4,16 @@
+ #
+ 
+ PREFIX=/usr
+-LIB=$(PREFIX)/lib/pirehose
++BINDIR=${PREFIX}/bin
++LIBDIR=$(PREFIX)/lib
++LIB=${LIBDIR}/piaware
+ TCLLAUNCHER := $(shell which tcllauncher)
+ 
+ all:
+ 	@echo "'make install' to install pirehose"
+ 
+ install:
+-	install -d $(DESTDIR)$(PREFIX)/bin $(DESTDIR)$(LIB)
+-	install -m 0755 $(TCLLAUNCHER) $(DESTDIR)$(PREFIX)/bin/pirehose
+-	install *.tcl $(DESTDIR)$(LIB)
+-	install -m 0755 *.sh $(DESTDIR)$(LIB)
++	install -d $(DESTDIR)$(BINDIR) $(DESTDIR)${LIBDIR}/pirehose
++	install -m 0755 $(TCLLAUNCHER) $(DESTDIR)$(BINDIR)/pirehose
++	install *.tcl $(DESTDIR)${LIBDIR}/pirehose
++	install -m 0755 *.sh $(DESTDIR)${LIBDIR}/pirehose
+diff --git a/scripts/Makefile b/scripts/Makefile
+index 5531536..a6e1490 100644
+--- a/scripts/Makefile
++++ b/scripts/Makefile
+@@ -1,4 +1,3 @@
+-PREFIX=/usr
+ ETCDIR=/etc
+ 
+ # locate the config directory of the init system
