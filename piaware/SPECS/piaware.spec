@@ -7,9 +7,11 @@ Summary:  Client-side package and programs for forwarding ADS-B data to FlightAw
 License:  Copyright FlightAware LLC
 URL:      https://github.com/flightaware/piaware
 Source0:  https://github.com/flightaware/piaware/archive/v%{version}.tar.gz
+Source1:  https://github.com/flightaware/piaware-web/archive/v%{version}.zip
 
-Source1:  piaware.service
-Source2:  piaware.sysconfig
+Source2:  piaware.service
+Source3:  piaware.sysconfig
+Source4:  lighttpd-piaware.conf
 
 Patch0: piaware-7.1.patch
 
@@ -38,6 +40,7 @@ piaware-status - used to check the status of piaware
 
 %prep
 %setup -qn piaware-%{version}
+%setup -qa 1
 %patch0 -p1
 
 %install
@@ -62,8 +65,14 @@ ln -s tcllauncher %{buildroot}%{_bindir}/pirehose
 
 rm -f %{buildroot}%{_mandir}/man1/faup1090.1
 
-install -Dpm 0644 %{SOURCE1} %{buildroot}%{_unitdir}/piaware.service
-install -Dpm 0644 %{SOURCE2} %{buildroot}%{_sysconfdir}/sysconfig/piaware
+install -Dpm 0644 %{SOURCE2} %{buildroot}%{_unitdir}/piaware.service
+install -Dpm 0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/sysconfig/piaware
+
+install -Dpm 0644 %{SOURCE4} %{buildroot}%{_docdir}/%{name}/lighttpd-piaware.conf
+install -Dpm 0755 -d %{buildroot}%{_datarootdir}/%{name}
+cp -a piaware-web-%{version}/web %{buildroot}%{_datarootdir}/%{name}/public_html
+rm -f %{buildroot}%{_datarootdir}/%{name}/public_html/README.md
+mv %{buildroot}%{_datarootdir}/%{name}/public_html/translations/en.js %{buildroot}%{_datarootdir}/%{name}/public_html/translations/lang.js
 
 
 %pre
@@ -85,6 +94,8 @@ getent passwd piaware >/dev/null 2>&1 || useradd \
 
 
 %files
+%doc %{_docdir}/%{name}/lighttpd-piaware.conf
+
 %config(noreplace) %{_sysconfdir}/sysconfig/piaware
 
 %{_bindir}/piaware
@@ -94,8 +105,12 @@ getent passwd piaware >/dev/null 2>&1 || useradd \
 %{_unitdir}/piaware.service
 %{tcl_sitearch}
 %{_mandir}
+%{_datarootdir}/%{name}/public_html
 
 %changelog
+* Sat Feb 19 2022 Andre Sencioles <asenci@gmail.com> - 7.1-4
+- Add status web page
+
 * Sat Feb 19 2022 Andre Sencioles <asenci@gmail.com> - 7.1-3
 - Update systemd unit file
 
