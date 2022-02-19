@@ -1,6 +1,6 @@
 Name:     dump1090-fa
 Version:  6.1
-Release:  7%{?dist}
+Release:  8%{?dist}
 Summary:  FlightAware ADS-B Ground Station System for SDRs
 License:  GPLv2
 URL:      https://www.flightaware.com/
@@ -54,7 +54,7 @@ install -Dpm 0755 starch-benchmark %{buildroot}%{_libdir}/%{name}/starch-benchma
 install -Dpm 0755 debian/generate-wisdom %{buildroot}%{_libdir}/%{name}/generate-wisdom
 
 install -Dpm 0755 -d %{buildroot}%{_datarootdir}/%{name}
-cp -a public_html %{buildroot}%{_datarootdir}/%{name}/
+cp -a public_html_merged %{buildroot}%{_datarootdir}/%{name}/public_html
 cp -a bladerf %{buildroot}%{_datarootdir}/%{name}/
 
 install -Dpm 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/sysconfig/dump1090-fa
@@ -98,6 +98,9 @@ getent passwd dump1090 >/dev/null 2>&1 || useradd \
 
 
 %changelog
+* Sat Feb 19 2022 Andre Sencioles <asenci@gmail.com> - 6.1-8
+- Use skyaware public_html
+
 * Sat Feb 19 2022 Andre Sencioles <asenci@gmail.com> - 6.1-7
 - Update lighttpd config
 
