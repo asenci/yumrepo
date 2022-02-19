@@ -1,6 +1,6 @@
 Name:     dump1090-fa
 Version:  6.1
-Release:  6%{?dist}
+Release:  7%{?dist}
 Summary:  FlightAware ADS-B Ground Station System for SDRs
 License:  GPLv2
 URL:      https://www.flightaware.com/
@@ -8,7 +8,7 @@ Source0:  https://github.com/flightaware/dump1090/archive/refs/tags/v%{version}.
 
 Source1:  dump1090-fa.sysconfig
 Source2:  dump1090-fa.service
-Source3:  lighttpd-dump1090-fa.conf
+Source3:  lighttpd-skyaware.conf
 
 Patch0:   dump1090-fa-6.1.patch
 
@@ -48,7 +48,7 @@ install -Dpm 0755 dump1090 %{buildroot}%{_bindir}/dump1090-fa
 install -Dpm 0755 faup1090 %{buildroot}%{_bindir}/faup1090
 install -Dpm 0755 view1090 %{buildroot}%{_bindir}/view1090-fa
 
-install -Dpm 0644 %{SOURCE3} %{buildroot}%{_docdir}/%{name}/lighttpd-dump1090-fa.conf
+install -Dpm 0644 %{SOURCE3} %{buildroot}%{_docdir}/%{name}/lighttpd-skyaware.conf
 
 install -Dpm 0755 starch-benchmark %{buildroot}%{_libdir}/%{name}/starch-benchmark
 install -Dpm 0755 debian/generate-wisdom %{buildroot}%{_libdir}/%{name}/generate-wisdom
@@ -85,7 +85,7 @@ getent passwd dump1090 >/dev/null 2>&1 || useradd \
 
 %doc README*.md
 %doc debian/README.librtlsdr
-%doc %{_docdir}/%{name}/lighttpd-dump1090-fa.conf
+%doc %{_docdir}/%{name}/lighttpd-skyaware.conf
 
 %config(noreplace) %{_sysconfdir}/sysconfig/dump1090-fa
 
@@ -98,6 +98,9 @@ getent passwd dump1090 >/dev/null 2>&1 || useradd \
 
 
 %changelog
+* Sat Feb 19 2022 Andre Sencioles <asenci@gmail.com> - 6.1-7
+- Update lighttpd config
+
 * Sat Feb 19 2022 Andre Sencioles <asenci@gmail.com> - 6.1-6
 - Update sysconfig defaults
 

@@ -1,6 +1,6 @@
 Name:     dump978-fa
 Version:  7.1
-Release:  1%{?dist}
+Release:  2%{?dist}
 Summary:  FlightAware 978MHz UAT decoder
 License:  GPLv2
 URL:      https://www.flightaware.com/
@@ -90,5 +90,8 @@ getent passwd dump978 >/dev/null 2>&1 || useradd \
 
 
 %changelog
+* Sat Feb 19 2022 Andre Sencioles <asenci@gmail.com> - 7.1-2
+- Update lighttpd config
+
 * Mon Feb  7 2022 Andre Sencioles <asenci@gmail.com> - 7.1-1
 - Initial release

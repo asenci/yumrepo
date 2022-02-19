@@ -2,7 +2,7 @@
 %{!?tcl_sitearch: %global tcl_sitearch %{_libdir}/tcl%{tcl_version}}
 Name:     piaware
 Version:  7.1
-Release:  3%{?dist}
+Release:  5%{?dist}
 Summary:  Client-side package and programs for forwarding ADS-B data to FlightAware
 License:  Copyright FlightAware LLC
 URL:      https://github.com/flightaware/piaware
@@ -108,6 +108,9 @@ getent passwd piaware >/dev/null 2>&1 || useradd \
 %{_datarootdir}/%{name}/public_html
 
 %changelog
+* Sat Feb 19 2022 Andre Sencioles <asenci@gmail.com> - 7.1-5
+- Fix lighttpd config
+
 * Sat Feb 19 2022 Andre Sencioles <asenci@gmail.com> - 7.1-4
 - Add status web page
 
