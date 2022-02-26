@@ -1,0 +1,32 @@
+[Unit]
+Description=readsb ADS-B receiver
+Documentation=https://github.com/adsbxchange/readsb/
+After=network.target
+
+[Service]
+User=readsb
+EnvironmentFile=-/etc/sysconfig/readsb
+Type=simple
+
+ExecStart=/usr/bin/readsb --quiet --write-json %t/readsb \
+  $RECEIVER \
+  $RECEIVER_SERIAL \
+  $RECEIVER_GAIN \
+  $LAT \
+  $LON \
+  $MAX_RANGE \
+  $NETWORK \
+  $NET_RAW_INPUT_PORTS \
+  $NET_RAW_OUTPUT_PORTS \
+  $NET_SBS_OUTPUT_PORTS \
+  $NET_BEAST_INPUT_PORTS \
+  $NET_BEAST_OUTPUT_PORTS \
+  $JSON_LOCATION_ACCURACY \
+  $EXTRA_OPTIONS
+
+RuntimeDirectory=readsb
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=default.target
