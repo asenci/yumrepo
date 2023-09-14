@@ -1,4 +1,4 @@
-FROM fedora:39
+FROM fedora:40
 
 RUN dnf -y install --setopt=tsflags=nodocs \
   cmake \
